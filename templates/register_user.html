@@ -1,0 +1,130 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDRF Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            background: url("{% static 'wel.png' %}") no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #007bff, #6610f2);
+            border: none;
+            transition: 0.3s;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #6610f2, #007bff);
+        }
+        .logout {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: #dc3545;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+        .logout:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <header class="text-center p-4 bg-dark text-white">
+        <h2 class="fw-bold">Registration<h2>
+        <a href="{% url 'index' %}" class="logout">Logout</a>
+    </header>
+
+    <div class="container mt-4">
+        <h3 class="text-center fw-bold text-primary">Disaster Management Act Information</h3>
+        <p class="text-muted">Prior to the enactment of the Disaster Management Act, 2005, the Tamil Nadu Government in its order No. 323, Revenue (NC-11(1)) Department dated 08-07-2003 issued orders for the constitution of State Disaster Management.</p>
+        <p class="text-muted">The Disaster Management Act, 2005, provides for a systematic and planned approach to disaster preparedness and response at all levels of government. The act defines the roles of the National Disaster Management Authority (NDMA), State Disaster Management Authority (SDMA), and District Disaster Management Authority (DDMA) in ensuring effective coordination and response during disasters.</p>
+        <p class="text-muted">As per the act, the government ensures immediate relief, rescue operations, and long-term rehabilitation support to affected populations. Various schemes such as the State Disaster Response Fund (SDRF) and National Disaster Response Fund (NDRF) are implemented to provide financial aid and infrastructure rebuilding.</p>
+    </div>
+
+    <div class="container mt-5">
+        <h3 class="text-center fw-bold text-primary">Register</h3>
+        <p class="text-muted text-center">Ensure quick assistance in disaster management by registering now.</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <input type="text" class="form-control" name="name" placeholder="Name" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <input type="email" class="form-control" name="email" placeholder="Email" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <select class="form-select" name="gender" required>
+                        <option value="" disabled selected>Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <input type="date" class="form-control" name="dob" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" name="address" placeholder="Address" required>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <input type="text" class="form-control" name="area" placeholder="Area" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <input type="text" class="form-control" name="taluk" placeholder="Taluk" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <input type="text" class="form-control" name="state" placeholder="State" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <input type="text" class="form-control" name="district" placeholder="District" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <input type="text" class="form-control" name="pincode" placeholder="Pincode" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <input type="text" class="form-control" name="contact" placeholder="Contact" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Register</button>
+        </form>
+    </div>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Bank Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Add any inline styles or remove if you have external CSS */
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { max-width: 500px; margin: auto; background: #fff; padding: 20px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Enter Bank Details</h2>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <p class="{{ category }}">{{ message }}</p>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        <form method="post">
+            <label for="account_holder_name">Account Holder Name:</label><br>
+            <input type="text" id="account_holder_name" name="account_holder_name" required><br><br>
+
+            <label for="bank_name">Bank Name:</label><br>
+            <input type="text" id="bank_name" name="bank_name" required><br><br>
+
+            <label for="account_number">Account Number:</label><br>
+            <input type="text" id="account_number" name="account_number" required><br><br>
+
+            <label for="ifsc_code">IFSC Code:</label><br>
+            <input type="text" id="ifsc_code" name="ifsc_code" required><br><br>
+
+            <label for="branch">Branch (optional):</label><br>
+            <input type="text" id="branch" name="branch"><br><br>
+
+            <button type="submit">Submit Bank Details</button>
+        </form>
+    </div>
+</body>
+</html>

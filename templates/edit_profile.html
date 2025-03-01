@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h2>Edit Profile</h2>
+    <form action="{{ url_for('edit_profile') }}" method="POST">
+        <label>Name:</label>
+        <input type="text" name="name" value="{{ user.name }}" required><br>
+
+        <label>Gender:</label>
+        <select name="gender" required>
+            <option value="Male" {% if user.gender == 'Male' %}selected{% endif %}>Male</option>
+            <option value="Female" {% if user.gender == 'Female' %}selected{% endif %}>Female</option>
+            <option value="Other" {% if user.gender == 'Other' %}selected{% endif %}>Other</option>
+        </select><br>
+
+        <label>Date of Birth:</label>
+        <input type="date" name="dob" value="{{ user.dob }}" required><br>
+
+        <label>Address:</label>
+        <textarea name="address" required>{{ user.address }}</textarea><br>
+
+        <label>Area:</label>
+        <input type="text" name="area" value="{{ user.area }}" required><br>
+
+        <label>Taluk:</label>
+        <input type="text" name="taluk" value="{{ user.taluk }}" required><br>
+
+        <label>State:</label>
+        <input type="text" name="state" value="{{ user.state }}" required><br>
+
+        <label>District:</label>
+        <input type="text" name="district" value="{{ user.district }}" required><br>
+
+        <label>Pincode:</label>
+        <input type="text" name="pincode" value="{{ user.pincode }}" required><br>
+
+        <label>Email:</label>
+        <input type="email" name="email" value="{{ user.email }}" required><br>
+
+        <label>Mobile:</label>
+        <input type="text" name="contact" value="{{ user.contact }}" required><br>
+
+        <button type="submit">Update Profile</button>
+    </form>
+    
+    <br>
+    <a href="{{ url_for('user_profile') }}">Back to Profile</a>
+</body>
+</html>

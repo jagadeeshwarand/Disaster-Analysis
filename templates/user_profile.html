@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
+    <h2 class="mb-4">User Profile</h2>
+    <table class="table table-bordered">
+        <tr><th>Name</th><td>{{ user.name }}</td></tr>
+        <tr><th>Gender</th><td>{{ user.gender }}</td></tr>
+        <tr><th>Date of Birth</th><td>{{ user.dob }}</td></tr>
+        <tr><th>Address</th><td>{{ user.address }}</td></tr>
+        <tr><th>Area</th><td>{{ user.area }}</td></tr>
+        <tr><th>Taluk</th><td>{{ user.taluk }}</td></tr>
+        <tr><th>State</th><td>{{ user.state }}</td></tr>
+        <tr><th>District</th><td>{{ user.district }}</td></tr>
+        <tr><th>Pincode</th><td>{{ user.pincode }}</td></tr>
+        <!-- Corrected 'mobile' to 'contact' -->
+        <tr><th>Mobile</th><td>{{ user.contact }}</td></tr>
+        <tr><th>Email</th><td>{{ user.email }}</td></tr>
+    </table>
+    <a href="{% url 'user_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+    <a href="{% url 'edit_profile' %}">
+        <button>Edit Profile</button>
+    </a>
+    </a>
+    
+</body>
+</html>
+
