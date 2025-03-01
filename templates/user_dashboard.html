@@ -1,10 +1,12 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Disaster Relief Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
     <style>
         body.dashboard-body {
             font-family: Arial, sans-serif;
@@ -85,9 +87,9 @@
     <div class="sidebar">
         <h2>Dashboard</h2>
         <ul>
-            <li><a href="{{ url_for('user_login') }}">Home</a></li>
-            <li><a href="{{ url_for('user_profile') }}">Profile</a></li>
-            <li><a href="{{ url_for('logout') }}" class="logout-btn">Logout</a></li>
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="{% url 'user_profile' %}">Profile</a></li>
+            <li><a href="{% url 'logout' %}" class="logout-btn">Logout</a></li>
         </ul>
     </div>
 
@@ -99,8 +101,8 @@
         <p>Apply for assistance and track your application status below.</p>
 
         <div class="dashboard-grid">
-            <a href="{{ url_for('fund_apply') }}" class="button">Apply for Funds</a>
-            <a href="{{ url_for('status') }}" class="button">Check Application Status</a>
+            <a href="{% url 'fund_apply' %}" class="button">Apply for Funds</a>
+            <a href="{% url 'status' %}" class="button">Check Application Status</a>
         </div>
 
         <!-- Warning Container -->

@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -162,46 +164,46 @@
 
         {% if applications %}
             <table>
-                <tr>
-                    <th>Disaster Type</th>
-                    <th>Date</th>
-                    <th>Damage Description</th>
-                    <th>Proof</th>
-                    <th>Status</th>
-                </tr>
-                {% for app in applications %}
-                <tr>
-                    <td>{{ app.disaster_type }}</td>
-                    <td>{{ app.disaster_date }}</td>
-                    <td>{{ app.damage_description }}</td>
-                    <td>
-                        <a href="{{ url_for('static', filename=app.file_path.replace('\\', '/').replace('static/', '')) }}" target="_blank">
-                            View Proof
-                        </a>
-                    </td>
-                    <td>
-                        <span class="status 
-                            {% if app.status == 'Pending' %} pending 
-                            {% elif app.status == 'Approved' %} approved 
-                            {% elif app.status == 'Denied' %} denied 
-                            {% endif %}">
-                            {{ app.status }}
-                        </span>
-                    </td>
-                </tr>
-                {% endfor %}
+            <tr>
+                <th>Disaster Type</th>
+                <th>Date</th>
+                <th>Damage Description</th>
+                <th>Proof</th>
+                <th>Status</th>
+            </tr>
+            {% for app in applications %}
+            <tr>
+                <td>{{ app.disaster_type }}</td>
+                <td>{{ app.disaster_date }}</td>
+                <td>{{ app.damage_description }}</td>
+                <td>
+                <a href="{{ app.file_url }}" target="_blank">
+                    <img src="{{ app.file_url }}" alt="File" style="max-width: 100px; max-height: 100px;">
+                </a>
+                </td>
+                <td>
+                <span class="status 
+                    {% if app.status == 'Pending' %} pending 
+                    {% elif app.status == 'Approved' %} approved 
+                    {% elif app.status == 'Denied' %} denied 
+                    {% endif %}">
+                    {{ app.status }}
+                </span>
+                </td>
+            </tr>
+            {% endfor %}
             </table>
         {% else %}
             <p>No applications found.</p>
         {% endif %}
 
         <!-- Bank Details Button (Visible if at least one application is approved) -->
-        {% if applications and applications | selectattr("status", "equalto", "Approved") | list | length > 0 %}
-            <a href="{{ url_for('bank_details') }}" class="bank-btn">Enter Bank Details</a>
+        {% if applications and applications|yesno:"Approved" %}
+            <a href="{% url 'bank_details' %}" class="bank-btn">Enter Bank Details</a>
         {% endif %}
 
         <br>
-        <a href="{{ url_for('user_dashboard') }}" class="back-btn">Back to Dashboard</a>
+        <a href="{% url 'user_dashboard' %}" class="back-btn">Back to Dashboard</a>
     </div>
 </body>
 </html>

@@ -9,18 +9,17 @@
 <body class="container mt-5">
     <h2 class="mb-4">User Profile</h2>
     <table class="table table-bordered">
-        <tr><th>Name</th><td>{{ user.name }}</td></tr>
-        <tr><th>Gender</th><td>{{ user.gender }}</td></tr>
-        <tr><th>Date of Birth</th><td>{{ user.dob }}</td></tr>
-        <tr><th>Address</th><td>{{ user.address }}</td></tr>
-        <tr><th>Area</th><td>{{ user.area }}</td></tr>
-        <tr><th>Taluk</th><td>{{ user.taluk }}</td></tr>
-        <tr><th>State</th><td>{{ user.state }}</td></tr>
-        <tr><th>District</th><td>{{ user.district }}</td></tr>
-        <tr><th>Pincode</th><td>{{ user.pincode }}</td></tr>
-        <!-- Corrected 'mobile' to 'contact' -->
-        <tr><th>Mobile</th><td>{{ user.contact }}</td></tr>
-        <tr><th>Email</th><td>{{ user.email }}</td></tr>
+        <tr><th>Name</th><td>{{ user.0 }}</td></tr>
+        <tr><th>Gender</th><td>{{ user.1 }}</td></tr>
+        <tr><th>Date of Birth</th><td>{{ user.2 }}</td></tr>
+        <tr><th>Address</th><td>{{ user.3 }}</td></tr>
+        <tr><th>Area</th><td>{{ user.4 }}</td></tr>
+        <tr><th>Taluk</th><td>{{ user.5 }}</td></tr>
+        <tr><th>State</th><td>{{ user.6 }}</td></tr>
+        <tr><th>District</th><td>{{ user.7 }}</td></tr>
+        <tr><th>Pincode</th><td>{{ user.8 }}</td></tr>
+        <tr><th>Mobile</th><td>{{ user.9 }}</td></tr>
+        <tr><th>Email</th><td>{{ user.10 }}</td></tr>
     </table>
     <a href="{% url 'user_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
     <a href="{% url 'edit_profile' %}">

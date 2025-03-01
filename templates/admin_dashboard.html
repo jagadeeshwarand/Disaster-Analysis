@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -102,7 +104,7 @@
 <body>
 
     <h2>Admin Dashboard - Approve/Deny Applications</h2>
-    <a href="{{ url_for('admin_logout') }}" class="logout-button">🚪 Logout</a>
+    <a href="{% url 'admin_logout' %}" class="logout-button">🚪 Logout</a>
 
     <!-- Disaster Analysis Section -->
     <h2>Disaster Analysis</h2>
@@ -123,16 +125,17 @@
             <td>{{ application.disaster_type }}</td>
             <td>{{ application.disaster_date }}</td>
             <td>{{ application.damage_description }}</td>
-            <td> <a href="{{ url_for('view_proof', filename=application.file_path.split('/')[-1]) }}" target="_blank">
+            <td> <a href="{% url 'view_proof' application.file_path|slice:'-1' %}" target="_blank">
                 View Proof
-            </a>
+            </a></td>
             
             <td>
-                <a class="approve" href="{{ url_for('update_status', app_id=application.id, status='Approved') }}">✅ Approve</a> 
-                <a class="deny" href="{{ url_for('update_status', app_id=application.id, status='Denied') }}">❌ Deny</a>
+                <a class="approve" href="{% url 'update_status' application.id 'Approved' %}">✅ Approve</a> 
+                <a class="deny" href="{% url 'update_status' application.id 'Denied' %}">❌ Deny</a>
             </td>
         </tr>
         {% endfor %}
+        
     </table>
 
 </body>
