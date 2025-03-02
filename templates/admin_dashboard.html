@@ -121,17 +121,27 @@
         </tr>
         {% for application in applications %}
         <tr>
-            <td>{{ application.name }}</td>
-            <td>{{ application.disaster_type }}</td>
-            <td>{{ application.disaster_date }}</td>
-            <td>{{ application.damage_description }}</td>
-            <td> <a href="{% url 'view_proof' application.file_path|slice:'-1' %}" target="_blank">
-                View Proof
-            </a></td>
+            <td>{{ application.0 }}</td>
+            <td>{{ application.1 }}</td>
+            <td>{{ application.2 }}</td>
+            <td>{{ application.3 }}</td>
+            <td>
+                {% if application.4 %}
+                    <a href="{{ application.4.url }}" target="_blank" class="file-link">
+                        View Proof
+                    </a>
+                {% else %}
+                    No Proof Available
+                {% endif %}
+            </td>
             
             <td>
-                <a class="approve" href="{% url 'update_status' application.id 'Approved' %}">✅ Approve</a> 
-                <a class="deny" href="{% url 'update_status' application.id 'Denied' %}">❌ Deny</a>
+                {% if application.0 %}
+                    <a class="approve" href="{% url 'update_status' application.0 'Approved' %}">✅ Approve</a> 
+                    <a class="deny" href="{% url 'update_status' application.0 'Denied' %}">❌ Deny</a>
+                {% else %}
+                    <span>Invalid Application ID</span>
+                {% endif %}
             </td>
         </tr>
         {% endfor %}

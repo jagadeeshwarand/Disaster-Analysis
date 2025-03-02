@@ -12,6 +12,8 @@ from django.http import FileResponse
 from django.core.files.storage import default_storage
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
+from django.contrib import messages
 
 
 
@@ -168,23 +170,49 @@ def admin_login(request):
             return redirect('admin_dashboard')
         else:
             msg = 'Incorrect admin credentials!'
-          
-
-
+           
     return render(request, 'admin_login.html', {'msg': msg})
 
 
 
 def admin_dashboard(request):
-    if not request.user.is_superuser:
+    if 'admin_loggedin' not in request.session:
         return redirect('admin_login')
-    
-    applications = FundApplication.objects.filter(status='Pending')
+
+    cursor = mydb.cursor()
+    cursor.execute("SELECT * FROM fund_applications WHERE status = 'Pending'")
+    applications = cursor.fetchall()
+    cursor.close()
     
     return render(request, 'admin_dashboard.html', {'applications': applications})
 
+def admin_logout(request):
+    request.session.pop('admin_loggedin', None)
+    request.session.pop('admin_email', None)
+    messages.success(request, "Admin logged out successfully.")
+    return redirect('admin_login')
+
+# Duplicate definition removed
 
 
+def update_status(request, app_id, status):
+    if 'admin_loggedin' not in request.session:
+        return redirect('admin_login')
+
+    if status not in ["Approved", "Denied"]:
+        messages.error(request, "Invalid action!")
+        return redirect('admin_dashboard')
+
+    try:
+        cursor = mydb.cursor()
+        cursor.execute("UPDATE fund_applications SET status = %s WHERE id = %s", (status, app_id))
+        mydb.commit()
+        cursor.close()
+        messages.success(request, f"Application {status} successfully!")
+    except mysql.connector.Error as err:
+        messages.error(request, f"Database error: {err}")
+
+    return redirect('admin_dashboard')
 
 def user_profile(request):
     if 'loggedin' not in request.session:
@@ -277,31 +305,6 @@ def view_proof(request, filename):
         messages.error(request, 'File not found.')
         return redirect('user_dashboard')
 
-    # Insert Admin Account Setup Logic Here (once only)
-    admin_password = 'admin123'  # The password you want to store for the admin user
-    hashed_admin_password = hashlib.sha256(admin_password.encode()).hexdigest()
-    print(f"Hashed Admin Password: {hashed_admin_password}")  # Display the hashed password
-
-    try:
-        mycursor = mydb.cursor()
-        admin_email = 'admin@admin.com'  # Admin email
-
-        # Check if admin record already exists
-        mycursor.execute('SELECT * FROM admin WHERE email = %s', (admin_email,))
-        account = mycursor.fetchone()
-
-        if not account:
-            sql = "INSERT INTO admin (email, password) VALUES (%s, %s)"
-            values = (admin_email, hashed_admin_password)
-
-            mycursor.execute(sql, values)
-            mydb.commit()
-            print("Admin record created successfully!")
-        else:
-            print("Admin record already exists.")
-
-    except Exception as err:
-        print(f"Error: {err}")
 
 def status(request):
     if 'loggedin' not in request.session:
@@ -322,6 +325,10 @@ def status(request):
 
         messages.error(request, f"Database error: {err}")
         return render(request, 'status.html', {'applications': [], 'error': True})
+
+def status_view(request):
+    applications = Application.objects.filter(user=request.user)
+    return render(request, 'status.html', {'applications': applications})
 
 def edit_profile(request):
     if 'loggedin' in request.session:
@@ -359,3 +366,34 @@ def edit_profile(request):
         })
     messages.warning(request, 'Please log in first!')
     return redirect('user_login')
+
+def bank_details(request):
+    if 'loggedin' not in request.session:
+        messages.warning(request, "Please log in to submit bank details.")
+        return redirect('user_login')
+
+    msg = ''
+    if request.method == 'POST':
+        account_holder_name = request.POST.get('account_holder_name')
+        bank_name = request.POST.get('bank_name')
+        account_number = request.POST.get('account_number')
+        ifsc_code = request.POST.get('ifsc_code')
+        branch = request.POST.get('branch', '')  # Optional field
+
+        try:
+            cursor = mydb.cursor()
+            sql = '''INSERT INTO bank_details 
+                        (user_contact, account_holder_name, bank_name, account_number, ifsc_code, branch)
+                        VALUES (%s, %s, %s, %s, %s, %s)'''
+            values = (request.session['contact'], account_holder_name, bank_name, account_number, ifsc_code, branch)
+            cursor.execute(sql, values)
+            mydb.commit()
+            cursor.close()
+
+            messages.success(request, "Bank details submitted successfully!")
+            return redirect('status')
+
+        except mysql.connector.Error as err:
+            msg = f"Database error: {err}"
+
+    return render(request, 'bank_details.html', {'msg': msg})

@@ -173,22 +173,22 @@
             </tr>
             {% for app in applications %}
             <tr>
-                <td>{{ app.disaster_type }}</td>
-                <td>{{ app.disaster_date }}</td>
-                <td>{{ app.damage_description }}</td>
+                <td>{{ app.2 }}</td>
+                <td>{{ app.3 }}</td>
+                <td>{{ app.4 }}</td>
                 <td>
-                <a href="{{ app.file_url }}" target="_blank">
-                    <img src="{{ app.file_url }}" alt="File" style="max-width: 100px; max-height: 100px;">
-                </a>
+                    <a href="{{ app.5.url.url }}" target="_blank">
+                        <img src="{{ app.5.url.url }}" alt="File" style="max-width: 100px; max-height: 100px;">
+                    </a>
                 </td>
                 <td>
-                <span class="status 
-                    {% if app.status == 'Pending' %} pending 
-                    {% elif app.status == 'Approved' %} approved 
-                    {% elif app.status == 'Denied' %} denied 
-                    {% endif %}">
-                    {{ app.status }}
-                </span>
+                    <span class="status 
+                        {% if app.7 == 'Pending' %} pending 
+                        {% elif app.7 == 'Approved' %} approved 
+                        {% elif app.7 == 'Denied' %} denied 
+                        {% endif %}">
+                        {{ app.7 }}
+                    </span>
                 </td>
             </tr>
             {% endfor %}

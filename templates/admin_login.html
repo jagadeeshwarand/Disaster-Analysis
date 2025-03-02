@@ -113,7 +113,7 @@
         {% endif %}
 
         <!-- Login Form -->
-        <form method="POST" action="{% url 'admin_login' %}">
+        <form method="POST">
             {% csrf_token %}
             <div class="form-group">
             <label for="email">Email</label>

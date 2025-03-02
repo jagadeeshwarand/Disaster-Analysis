@@ -1,9 +1,11 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Submit Bank Details</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <style>
         /* Add any inline styles or remove if you have external CSS */
         body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
@@ -13,14 +15,13 @@
 <body>
     <div class="container">
         <h2>Enter Bank Details</h2>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <p class="{{ category }}">{{ message }}</p>
+        {% if messages %}
+            {% for message in messages %}
+          <p class="{{ message.tags }}">{{ message }}</p>
             {% endfor %}
-          {% endif %}
-        {% endwith %}
+        {% endif %}
         <form method="post">
+          {% csrf_token %}
             <label for="account_holder_name">Account Holder Name:</label><br>
             <input type="text" id="account_holder_name" name="account_holder_name" required><br><br>
 
